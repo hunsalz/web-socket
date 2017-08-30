@@ -1,0 +1,109 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
+<link rel="import" href="../bower_components/iron-demo-helpers/demo-snippet.html">
+<link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-button/paper-button.html">
+
+<link rel="import" href="../web-socket.html">
+
+<dom-module id="echo-demo">
+  <template strip-whitespace>
+    <style>
+		  :host() {
+			  display: inline-block;
+		  }
+      .container {
+        display: inline-flex;
+        align-items: center;
+        width: 100%;
+      }
+      paper-button#connect {
+        padding-left: 24px;
+        padding-right: 24px;
+        background-color: var(--state-color, var(--paper-red-500));
+      }
+      paper-input {
+        width: 100%;
+      }
+	   </style>
+     <web-socket id="ws" auto url="[[url]]" state="{{state}}" last-request="{{request}}" last-response="{{response}}"></web-socket>
+     <div class="container">
+       <paper-input id="url" label="URL" value="{{url}}"></paper-input>
+       <paper-button id="connect" raised on-click="_toggleConnectionState">Disconnect</paper-button>
+     </div>
+     <template is="dom-repeat" items="[[messages]]">
+       <pre>[[item.author]]: [[item.text]]</pre>
+     </template>
+     <paper-input id="input" autofocus value="{{value}}"></paper-input>
+     <paper-button raised on-click="_send">Send</paper-button>
+  </template>
+  <script>
+    class EchoDemo extends Polymer.Element {
+
+      static get is() { return 'echo-demo'; }
+
+      static get properties() {
+        return {
+          url: {
+            type: String,
+            value: 'ws://127.0.0.1:8000'
+          },
+          messages: {
+            type: Array,
+            value: [],
+            notify: true
+          },
+          state: {
+            type: Number,
+            observer: '_changeColorState'
+          },
+          response: {
+            type: Object,
+            observer: '_handleResponse'
+          }
+        };
+      }
+
+      _send() {
+
+        this.$.ws.send(this.value);
+        this.push('messages', { author: 'request', text: this.value });
+        this.value = '';
+        this.$.input.focus();
+      }
+
+      _changeColorState() {
+
+        var _color = 'var(--paper-red-500)';
+        switch (this.state) {
+          case 0:
+            _color = 'var(--paper-orange-500)';
+            break;
+          case 1:
+            _color = 'var(--paper-green-500)';
+            break;
+          default:
+            // according to initial value
+        }
+        this.updateStyles({'--state-color': _color});
+      }
+
+      _toggleConnectionState() {
+
+        if (this.state === 1) {
+          this.$.ws.close();
+          this.$.connect.innerHTML= 'Connect';
+        } else {
+          this.$.ws.open();
+          this.$.connect.innerHTML= 'Disconnect';
+        }
+      }
+
+      _handleResponse() {
+        this.push('messages', { author: 'response', text: this.response });
+      }
+    }
+    window.customElements.define(EchoDemo.is, EchoDemo);
+  </script>
+</dom-module>
