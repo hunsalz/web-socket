@@ -51,6 +51,10 @@
           },
           ws: {
             type: Object
+          },
+          verbose: {
+            type: Boolean,
+            value: false
           }
         };
       }
@@ -72,25 +76,35 @@
 
       onOpen(event) {
         this._notifyStateChange();
-        console.info(this.id + " : WebSocket to [%s] established.", this.url, event);
+        if (this.verbose) {
+          console.info(this.id + " : WebSocket to [%s] established.", this.url, event);
+        }
       }
 
       onClose(event) {
         this._notifyStateChange();
         if (event.wasClean === true) {
-          console.info(this.id + " : WebSocket [%s] closed.", this.url, event);
+          if (this.verbose) {
+            console.info(this.id + " : WebSocket [%s] closed.", this.url, event);
+          }
         } else {
-          console.warn(this.id + " : WebSocket [%s] was closed.", this.url, event);
+          if (this.verbose) {
+            console.warn(this.id + " : WebSocket [%s] was closed.", this.url, event);
+          }
         }
       }
 
       onMessage(event) {
-        console.info(this.id + " : WebSocket [%s] received message.", this.url, event);
+        if (this.verbose) {
+          console.info(this.id + " : WebSocket [%s] received message.", this.url, event);
+        }
         this._setLastResponse(JSON.parse(event.data));
       }
 
       onError(event) {
-        console.error(this.id + " : WebSocket to [%s] returns error.", this.url, event);
+        if (this.verbose) {
+          console.error(this.id + " : WebSocket to [%s] returns error.", this.url, event);
+        }
       }
 
       /** public methods */
@@ -108,13 +122,19 @@
               _ws.send(JSON.stringify(object));
               this._setLastRequest(object);
             } catch (err) {
-              console.error(this.id + " : Failed to send message to [%s] WebSocket.", this.url, err);
+              if (this.verbose) {
+                console.error(this.id + " : Failed to send message to [%s] WebSocket.", this.url, err);
+              }
             }
           } else {
-            console.warn(this.id + " : WebSocket connection to [%s] isn't open.", this.url);
+            if (this.verbose) {
+              console.warn(this.id + " : WebSocket connection to [%s] isn't open.", this.url);
+            }
           }
         } else {
-          console.error(this.id + " : WebSocket connection to [%s] is null.", this.url);
+          if (this.verbose) {
+            console.error(this.id + " : WebSocket connection to [%s] is null.", this.url);
+          }
         }
       }
 
@@ -124,7 +144,9 @@
         if (_ws.readyState === OPEN) {
           _ws.close();
         } else {
-          console.warn(this.id + ": WebSocket connection isn't open.", _ws);
+          if (this.verbose) {
+            console.warn(this.id + ": WebSocket connection isn't open.", _ws);
+          }
         }
       }
 
@@ -138,12 +160,16 @@
 
         if (this.ws === null || this.ws === undefined || this.ws != null && this.ws.readyState === CLOSED) {
           if (this.url === undefined) {
-            console.error(this.id + " : Please provide a valid WebSocket url [%s].", this.url);
+            if (this.verbose) {
+              console.error(this.id + " : Please provide a valid WebSocket url [%s].", this.url);
+            }
           } else {
             try {
               this.ws = this._createWebSocket();
             } catch (err) {
-              console.error(this.id + " : Establishing WebSocket connection to [%s] failed.", this.url, err);
+              if (this.verbose) {
+                console.error(this.id + " : Establishing WebSocket connection to [%s] failed.", this.url, err);
+              }
             }
             this._notifyStateChange();
           }
