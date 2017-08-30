@@ -10,9 +10,9 @@
 <dom-module id="echo-demo">
   <template strip-whitespace>
     <style>
-		  :host() {
-			  display: inline-block;
-		  }
+      :host() {
+        display: inline-block;
+      }
       .container {
         display: inline-flex;
         align-items: center;
@@ -26,22 +26,24 @@
       paper-input {
         width: 100%;
       }
-	   </style>
-     <web-socket id="ws" auto url="[[url]]" state="{{state}}" last-request="{{request}}" last-response="{{response}}"></web-socket>
-     <div class="container">
+    </style>
+    <web-socket id="ws" auto url="[[url]]" state="{{state}}" last-request="{{request}}" last-response="{{response}}"></web-socket>
+    <div class="container">
        <paper-input id="url" label="URL" value="{{url}}"></paper-input>
        <paper-button id="connect" raised on-click="_toggleConnectionState">Disconnect</paper-button>
      </div>
      <template is="dom-repeat" items="[[messages]]">
        <pre>[[item.author]]: [[item.text]]</pre>
      </template>
-     <paper-input id="input" autofocus value="{{value}}"></paper-input>
-     <paper-button raised on-click="_send">Send</paper-button>
+  <paper-input id="input" autofocus value="{{value}}"></paper-input>
+  <paper-button raised on-click="_send">Send</paper-button>
   </template>
   <script>
     class EchoDemo extends Polymer.Element {
 
-      static get is() { return 'echo-demo'; }
+      static get is() {
+        return 'echo-demo';
+      }
 
       static get properties() {
         return {
@@ -68,7 +70,10 @@
       _send() {
 
         this.$.ws.send(this.value);
-        this.push('messages', { author: 'request', text: this.value });
+        this.push('messages', {
+          author: 'request',
+          text: this.value
+        });
         this.value = '';
         this.$.input.focus();
       }
@@ -86,22 +91,27 @@
           default:
             // according to initial value
         }
-        this.updateStyles({'--state-color': _color});
+        this.updateStyles({
+          '--state-color': _color
+        });
       }
 
       _toggleConnectionState() {
 
         if (this.state === 1) {
           this.$.ws.close();
-          this.$.connect.innerHTML= 'Connect';
+          this.$.connect.innerHTML = 'Connect';
         } else {
           this.$.ws.open();
-          this.$.connect.innerHTML= 'Disconnect';
+          this.$.connect.innerHTML = 'Disconnect';
         }
       }
 
       _handleResponse() {
-        this.push('messages', { author: 'response', text: this.response });
+        this.push('messages', {
+          author: 'response',
+          text: this.response
+        });
       }
     }
     window.customElements.define(EchoDemo.is, EchoDemo);

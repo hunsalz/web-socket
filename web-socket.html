@@ -3,14 +3,13 @@
 <dom-module id="web-socket">
   <template strip-whitespace>
     <style>
-		  :host() {
-			  display: none;
-		  }
-	   </style>
+      :host() {
+        display: none;
+      }
+    </style>
   </template>
 
   <script>
-
     // https://developer.mozilla.org/en-US/docs/Web/API/WebSocket#Ready_state_constants
     const CONNECTING = 0;
     const OPEN = 1;
@@ -19,7 +18,9 @@
 
     class WebSocket extends Polymer.Element {
 
-      static get is() { return 'web-socket'; }
+      static get is() {
+        return 'web-socket';
+      }
 
       static get properties() {
         return {
@@ -106,7 +107,7 @@
             try {
               _ws.send(JSON.stringify(object));
               this._setLastRequest(object);
-            } catch(err) {
+            } catch (err) {
               console.error(this.id + " : Failed to send message to [%s] WebSocket.", this.url, err);
             }
           } else {
@@ -141,7 +142,7 @@
           } else {
             try {
               this.ws = this._createWebSocket();
-            } catch(err) {
+            } catch (err) {
               console.error(this.id + " : Establishing WebSocket connection to [%s] failed.", this.url, err);
             }
             this._notifyStateChange();
