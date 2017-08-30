@@ -37,7 +37,8 @@
           },
           state: {
             type: Number,
-            notify: true
+            notify: true,
+            readOnly: true
           },
           lastRequest: {
             type: Object,
@@ -50,7 +51,8 @@
             readOnly: true
           },
           ws: {
-            type: Object
+            type: Object,
+            readOnly: true
           },
           verbose: {
             type: Boolean,
@@ -153,7 +155,7 @@
       /** private methods */
 
       _notifyStateChange() {
-        this.state = this.ws.readyState;
+        this._setState(this.ws.readyState);
       }
 
       _getWebSocket() {
@@ -165,7 +167,7 @@
             }
           } else {
             try {
-              this.ws = this._createWebSocket();
+              this._setWs(this._createWebSocket());
             } catch (err) {
               if (this.verbose) {
                 console.error(this.id + " : Establishing WebSocket connection to [%s] failed.", this.url, err);
