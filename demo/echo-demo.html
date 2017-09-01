@@ -50,7 +50,14 @@
         width: 100%;
       }
     </style>
-    <web-socket id="ws" auto url="[[url]]" state="{{state}}" last-response="{{response}}" last-error="{{error}}" verbose></web-socket>
+    <web-socket id="ws"
+                auto
+                url="[[url]]"
+                state="{{state}}"
+                last-response="{{response}}"
+                last-error="{{error}}"
+                verbose>
+    </web-socket>
     <div class="container">
       <paper-input-container always-float-label auto-validate attr-for-value="url">
         <label slot="label">URL</label>
@@ -117,7 +124,7 @@
 
         this.$.ws.send(this.message);
         this.push('messages', {
-          author: 'request',
+          author: 'you',
           text: this.message
         });
         this.message = '';
@@ -156,7 +163,7 @@
       _handleResponse() {
 
         this.push('messages', {
-          author: 'response',
+          author: 'server',
           text: this.response
         });
       }
