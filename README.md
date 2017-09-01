@@ -6,9 +6,9 @@ A [Polymer 2.0](https://www.polymer-project.org/2.0/) element to ease the use an
 
 *Prerequisites:*
 
-[npm](https://www.npmjs.com/)
-[bower](https://bower.io/)
-[Polymer CLI](https://www.npmjs.com/package/polymer-cli)
+* [npm](https://www.npmjs.com/)
+* [bower](https://bower.io/)
+* [Polymer CLI](https://www.npmjs.com/package/polymer-cli)
 
 1. Run bower install from the repo directory:
 
