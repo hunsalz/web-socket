@@ -10,6 +10,8 @@ A [Polymer 2.0](https://www.polymer-project.org/2.0/) element to ease the use an
 * [bower](https://bower.io/)
 * [Polymer CLI](https://www.npmjs.com/package/polymer-cli)
 
+*Install & run*
+
 1. Run bower install from the repo directory:
 
     bower install
