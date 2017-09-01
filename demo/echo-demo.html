@@ -59,13 +59,13 @@
         </iron-input>
         <paper-input-error id="error" slot="add-on">Failed to establish connection.</paper-input-error>
       </paper-input-container>
-        <paper-button id="connect" raised on-click="_toggleConnectionState">...</paper-button>
-     </div>
-     <template is="dom-repeat" items="[[messages]]">
+      <paper-button id="connect" raised on-click="_toggleConnectionState"></paper-button>
+    </div>
+    <template is="dom-repeat" items="[[messages]]">
       <pre>[[item.author]]: [[item.text]]</pre>
-     </template>
-     <paper-input id="input" autofocus value="{{message}}"></paper-input>
-     <paper-button raised on-click="_send">Send</paper-button>
+    </template>
+    <paper-input id="input" autofocus value="{{message}}"></paper-input>
+    <paper-button raised on-click="_send">Send</paper-button>
   </template>
   <script>
     class EchoDemo extends Polymer.Element {
@@ -78,7 +78,7 @@
         return {
           url: {
             type: String,
-            value: 'ws://127.0.0.1:8000',
+            value: 'wss://echo.websocket.org/',
             observer: '_handleUrlChanges',
             notify: true
           },
@@ -146,7 +146,7 @@
             this.$.connect.innerHTML = 'OFF';
             break;
           default:
-            this.$.connect.innerHTML = '...';
+            this.$.connect.innerHTML = '[x]';
         }
         this.updateStyles({
           '--state-color': _color
