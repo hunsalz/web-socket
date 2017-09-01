@@ -2,7 +2,10 @@
 
 <link rel="import" href="../bower_components/iron-demo-helpers/demo-pages-shared-styles.html">
 <link rel="import" href="../bower_components/iron-demo-helpers/demo-snippet.html">
+<link rel="import" href="../bower_components/iron-input/iron-input.html">
 <link rel="import" href="../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-container.html">
+<link rel="import" href="../bower_components/paper-input/paper-input-error.html">
 <link rel="import" href="../bower_components/paper-button/paper-button.html">
 
 <link rel="import" href="../web-socket.html">
@@ -21,22 +24,48 @@
       paper-button#connect {
         padding-left: 24px;
         padding-right: 24px;
-        background-color: var(--state-color, var(--paper-red-500));
+        background-color: var(--state-color, var(--paper-orange-500));
+      }
+      input {
+        outline: none;
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+        background: transparent;
+        border: none;
+        color: var(--paper-input-container-input-color, var(--primary-text-color));
+        -webkit-appearance: none;
+        text-align: inherit;
+        vertical-align: bottom;
+        /* Firefox sets a min-width on the input, which can cause layout issues */
+        min-width: 0;
+        @apply --paper-font-subhead;
+        @apply --paper-input-container-input;
+      }
+      paper-input-container {
+        width: 100%;
       }
       paper-input {
         width: 100%;
       }
     </style>
-    <web-socket id="ws" auto url="[[url]]" state="{{state}}" last-request="{{request}}" last-response="{{response}}" verbose></web-socket>
+    <web-socket id="ws" auto url="[[url]]" state="{{state}}" last-response="{{response}}" last-error="{{error}}" verbose></web-socket>
     <div class="container">
-       <paper-input id="url" label="URL" value="{{url}}"></paper-input>
-       <paper-button id="connect" raised on-click="_toggleConnectionState">Disconnect</paper-button>
+      <paper-input-container always-float-label auto-validate attr-for-value="url">
+        <label slot="label">URL</label>
+        <iron-input slot="input" bind-value="{{url}}">
+          <input value="{{url::input}}">
+        </iron-input>
+        <paper-input-error id="error" slot="add-on">Failed to establish connection.</paper-input-error>
+      </paper-input-container>
+        <paper-button id="connect" raised on-click="_toggleConnectionState">...</paper-button>
      </div>
      <template is="dom-repeat" items="[[messages]]">
-       <pre>[[item.author]]: [[item.text]]</pre>
+      <pre>[[item.author]]: [[item.text]]</pre>
      </template>
-  <paper-input id="input" autofocus value="{{value}}"></paper-input>
-  <paper-button raised on-click="_send">Send</paper-button>
+     <paper-input id="input" autofocus value="{{message}}"></paper-input>
+     <paper-button raised on-click="_send">Send</paper-button>
   </template>
   <script>
     class EchoDemo extends Polymer.Element {
@@ -49,7 +78,9 @@
         return {
           url: {
             type: String,
-            value: 'ws://127.0.0.1:8000'
+            value: 'ws://127.0.0.1:8000',
+            observer: '_handleUrlChanges',
+            notify: true
           },
           messages: {
             type: Array,
@@ -58,61 +89,81 @@
           },
           state: {
             type: Number,
-            observer: '_changeColorState'
+            observer: '_handleStateChanges',
+            notify: true
           },
           response: {
             type: Object,
             observer: '_handleResponse'
+          },
+          error: {
+            type: Object,
+            observer: '_handleError'
           }
         };
-      }
-
-      _send() {
-
-        this.$.ws.send(this.value);
-        this.push('messages', {
-          author: 'request',
-          text: this.value
-        });
-        this.value = '';
-        this.$.input.focus();
-      }
-
-      _changeColorState() {
-
-        var _color = 'var(--paper-red-500)';
-        switch (this.state) {
-          case 0:
-            _color = 'var(--paper-orange-500)';
-            break;
-          case 1:
-            _color = 'var(--paper-green-500)';
-            break;
-          default:
-            // according to initial value
-        }
-        this.updateStyles({
-          '--state-color': _color
-        });
       }
 
       _toggleConnectionState() {
 
         if (this.state === 1) {
           this.$.ws.close();
-          this.$.connect.innerHTML = 'Connect';
         } else {
           this.$.ws.open();
-          this.$.connect.innerHTML = 'Disconnect';
         }
         this.$.input.focus();
       }
 
+      _send() {
+
+        this.$.ws.send(this.message);
+        this.push('messages', {
+          author: 'request',
+          text: this.message
+        });
+        this.message = '';
+        this.$.input.focus();
+      }
+
+      _handleUrlChanges() {
+
+        if (this.$.ws.state === 1) {
+          this.$.ws.close();
+        }
+        // overwrite any error messages before
+        this.$.error.update({invalid: false});
+      }
+
+      _handleStateChanges() {
+
+        var _color = 'var(--paper-orange-500)';
+        switch (this.state) {
+          case 1:
+            _color = 'var(--paper-green-500)';
+            this.$.connect.innerHTML = 'ON';
+            break;
+          case 3:
+            _color = 'var(--paper-red-500)';
+            this.$.connect.innerHTML = 'OFF';
+            break;
+          default:
+            this.$.connect.innerHTML = '...';
+        }
+        this.updateStyles({
+          '--state-color': _color
+        });
+      }
+
       _handleResponse() {
+
         this.push('messages', {
           author: 'response',
           text: this.response
         });
+      }
+
+      _handleError() {
+
+        this.$.error.update({invalid: true});
       }
     }
     window.customElements.define(EchoDemo.is, EchoDemo);

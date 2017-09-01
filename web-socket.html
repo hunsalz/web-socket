@@ -29,7 +29,8 @@
             value: false
           },
           url: {
-            type: String
+            type: String,
+            notify: true
           },
           protocols: {
             type: Array,
@@ -46,6 +47,11 @@
             readOnly: true
           },
           lastResponse: {
+            type: Object,
+            notify: true,
+            readOnly: true
+          },
+          lastError: {
             type: Object,
             notify: true,
             readOnly: true
@@ -107,6 +113,7 @@
         if (this.verbose) {
           console.error(this.id + " : WebSocket to [%s] returns error.", this.url, event);
         }
+        this._setLastError(event);
       }
 
       /** public methods */
@@ -122,12 +129,13 @@
           if (_ws.readyState === OPEN) {
             try {
               _ws.send(JSON.stringify(object));
-              this._setLastRequest(object);
             } catch (err) {
               if (this.verbose) {
                 console.error(this.id + " : Failed to send message to [%s] WebSocket.", this.url, err);
               }
+              this._setLastError(object);
             }
+            this._setLastRequest(object);
           } else {
             if (this.verbose) {
               console.warn(this.id + " : WebSocket connection to [%s] isn't open.", this.url);
@@ -166,13 +174,7 @@
               console.error(this.id + " : Please provide a valid WebSocket url [%s].", this.url);
             }
           } else {
-            try {
-              this._setWs(this._createWebSocket());
-            } catch (err) {
-              if (this.verbose) {
-                console.error(this.id + " : Establishing WebSocket connection to [%s] failed.", this.url, err);
-              }
-            }
+            this._setWs(this._createWebSocket());
             this._notifyStateChange();
           }
         }
@@ -181,12 +183,20 @@
 
       _createWebSocket() {
 
-        var _ws = new window.WebSocket(this.url, this.protocols);
-        // bind socket events to component events
-        _ws.onopen = this.onOpen.bind(this);
-        _ws.onclose = this.onClose.bind(this);
-        _ws.onmessage = this.onMessage.bind(this);
-        _ws.onerror = this.onError.bind(this);
+        var _ws = null;
+        try {
+          _ws = new window.WebSocket(this.url, this.protocols);
+          // bind socket events to component events
+          _ws.onopen = this.onOpen.bind(this);
+          _ws.onclose = this.onClose.bind(this);
+          _ws.onmessage = this.onMessage.bind(this);
+          _ws.onerror = this.onError.bind(this);
+        } catch (err) {
+          if (this.verbose) {
+            console.error(this.id + " : Establishing WebSocket connection to [%s] failed.", this.url, err);
+          }
+          this._setLastError(err);
+        }
         return _ws;
       }
     }
