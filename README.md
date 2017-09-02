@@ -14,11 +14,15 @@ A [Polymer 2.0](https://www.polymer-project.org/2.0/) element to ease the use an
 
 1. Run bower install from the repo directory:
 
+```
     bower install
+```
 
 2. Run the Polymer development server from the project directory:
 
+```
     polymer serve --open
+```
 
 ## Usage
 
@@ -49,4 +53,4 @@ Attributes explained:
 
 ## Run your own prototype WebSocket-Server without great effort
 
-Almost all demo references uses **wss://echo.websocket.org/** as WebSocket-Server. If you search for a local alternative, you can get up and running in minutes, then you can try [httpwebsockethandler](https://github.com/SevenW/httpwebsockethandler) by [SevenW](https://github.com/SevenW)
+Almost all demo references uses *wss://echo.websocket.org/* as WebSocket-Server. If you search for a local alternative, you can get up and running in minutes with  [httpwebsockethandler](https://github.com/SevenW/httpwebsockethandler) by [SevenW](https://github.com/SevenW)
