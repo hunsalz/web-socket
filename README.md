@@ -2,6 +2,8 @@
 
 A [Polymer 2.0](https://www.polymer-project.org/2.0/) element to ease the use and configuration of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
 
+[Demo](https://hunsalz.github.io/web-socket)
+
 ## Install dependencies and run the demo
 
 *Prerequisites:*
