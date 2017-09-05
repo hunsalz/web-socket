@@ -1,3 +1,11 @@
+<!--
+The `web-socket` element ease the usage of WebSockets.
+
+@customElement
+@polymer
+@demo demo/index.html
+-->
+
 <link rel="import" href="../polymer/polymer.html">
 
 <dom-module id="web-socket">
@@ -10,7 +18,7 @@
   </template>
 
   <script>
-    // https://developer.mozilla.org/en-US/docs/Web/API/WebSocket#Ready_state_constants
+    // constant values according to https://developer.mozilla.org/en-US/docs/Web/API/WebSocket#Ready_state_constants
     const CONNECTING = 0;
     const OPEN = 1;
     const CLOSING = 2;
@@ -24,35 +32,63 @@
 
       static get properties() {
         return {
+          /**
+           * Enables auto connection with page load
+           */
           auto: {
             type: Boolean,
             value: false
           },
+          /**
+           * The URL to which to connect
+           */
           url: {
             type: String,
             notify: true
           },
+          /**
+           * An optional property to provide a single protocol string or an array of protocol strings.
+           */
           protocols: {
             type: Array,
             value: []
           },
+          /**
+           * Specifies the format in which the data is send.
+           */
+          handleAs: {
+            type: String,
+            value: 'json'
+          },
+          /**
+           * The current state of the WebSocket connection.
+           * Notifies about state changes according to https://developer.mozilla.org/en/docs/Web/API/WebSocket#Ready_state_constants
+           */
           state: {
             type: Number,
             notify: true,
             readOnly: true
           },
+          /**
+           * The most recent request made by this web-socket element.
+           * @type {Object}
+           */
           lastRequest: {
             type: Object,
             notify: true,
             readOnly: true
           },
+          /**
+           * The most recent response received by this web-socket element.
+           * @type {Object}
+           */
           lastResponse: {
             type: Object,
             notify: true,
             readOnly: true
           },
           /**
-           * last web-socket error, if any
+           * The most recent error received by this web-socket element. If any error occurred.
            * @type {Object}
            */
           lastError: {
@@ -60,10 +96,17 @@
             notify: true,
             readOnly: true
           },
+          /**
+           * The actual websocket object.
+           * @type {Object}
+           */
           ws: {
             type: Object,
             readOnly: true
           },
+          /**
+           * Enables verbose mode
+           */
           verbose: {
             type: Boolean,
             value: false
@@ -71,8 +114,9 @@
         };
       }
 
-      /** lifecycle functions */
-
+      /**
+       * If `auto` is true a WebSocket connection is established with page load.
+       */
       connectedCallback() {
 
         if (this.auto) {
@@ -80,12 +124,17 @@
         }
       }
 
+      /**
+       * Closes WebSocket connection when element is detached from document.
+       */
       disconnectedCallback() {
         close();
       }
 
-      /** callback functions */
-
+      /**
+       * Callback function that's called when websocket connection is open
+       * and ready to send and receive data.
+       */
       onOpen(event) {
         this._notifyStateChange();
         if (this.verbose) {
@@ -93,6 +142,9 @@
         }
       }
 
+      /**
+       * Callback function that's called when websocket connection is closed.
+       */
       onClose(event) {
         this._notifyStateChange();
         if (event.wasClean === true) {
@@ -106,6 +158,9 @@
         }
       }
 
+      /**
+       * Callback function that's called when a message is received from the server.
+       */
       onMessage(event) {
         if (this.verbose) {
           console.info(this.id + " : WebSocket [%s] received message.", this.url, event);
@@ -113,6 +168,9 @@
         this._setLastResponse(JSON.parse(event.data));
       }
 
+      /**
+       * Callback function that's called when an error occurs.
+       */
       onError(event) {
         if (this.verbose) {
           console.error(this.id + " : WebSocket to [%s] returns error.", this.url, event);
@@ -120,26 +178,32 @@
         this._setLastError(event);
       }
 
-      /** public methods */
-
+      /**
+       * Creates a new WebSocket connection if no connection is established so far.
+       * Automatically called when `auto` is true.
+       */
       open() {
         this._getWebSocket();
       }
 
-      send(object) {
+      /**
+       * Transmits data to the server over the WebSocket connection.
+       */
+      send(data) {
 
         var _ws = this._getWebSocket();
         if (_ws != null) {
           if (_ws.readyState === OPEN) {
+            var _data = JSON.stringify(data);
             try {
-              _ws.send(JSON.stringify(object));
+              _ws.send(_data);
             } catch (err) {
               if (this.verbose) {
                 console.error(this.id + " : Failed to send message to [%s] WebSocket.", this.url, err);
               }
-              this._setLastError(object);
+              this._setLastError(err);
             }
-            this._setLastRequest(object);
+            this._setLastRequest(_data);
           } else {
             if (this.verbose) {
               console.warn(this.id + " : WebSocket connection to [%s] isn't open.", this.url);
@@ -152,6 +216,10 @@
         }
       }
 
+      /**
+       * Closes the WebSocket connection if still open.
+       * If the connection is already closed, this method does nothing.
+       */
       close() {
 
         var _ws = this._getWebSocket();
@@ -165,12 +233,16 @@
         }
       }
 
-      /** private methods */
-
+      /**
+       * Called internally to notify about WebSocket.readyState changes.
+       */
       _notifyStateChange() {
         this._setState(this.ws.readyState);
       }
 
+      /**
+       * Return a new or an existing WebSocket connection if any URL is set.
+       */
       _getWebSocket() {
 
         if (this.ws === null || this.ws === undefined || this.ws != null && this.ws.readyState === CLOSED) {
@@ -186,12 +258,15 @@
         return this.ws;
       }
 
+      /**
+       * Called internally to create a new WebSocket connection.
+       */
       _createWebSocket() {
 
         var _ws = null;
         try {
           _ws = new window.WebSocket(this.url, this.protocols);
-          // bind socket events to component events
+          // bind WebSocket events to component events
           _ws.onopen = this.onOpen.bind(this);
           _ws.onclose = this.onClose.bind(this);
           _ws.onmessage = this.onMessage.bind(this);
