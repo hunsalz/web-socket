@@ -8,8 +8,6 @@ Watch a live [demo](https://hunsalz.github.io/web-socket) of the `<web-socket>` 
 
 ## Install dependencies and run the demo locally
 
-*Install & run*
-
 1. Install all dependencies via [Bower](https://bower.io/) in the repo directory:
 
 ```
@@ -40,7 +38,7 @@ The above example illustrates the usage of `<web-socket>` in a [Polymer](https:/
 
 Attributes explained:
 
-* __auto__ = Auto set to true, the web-socket tries to establish a connection on first page load
+* __auto__ = Auto set to true, the web-socket tries to establish a connection on first page load.
 * __url__ = The URL to which to connect
 * __protocols__ = An optional property to provide a single protocol string or an array of protocol strings.
 * __state__ = The current state of the WebSocket connection. Notifies about state changes:  [WebSocket.readyState](https://developer.mozilla.org/en/docs/Web/API/WebSocket#Ready_state_constants)
