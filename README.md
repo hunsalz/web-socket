@@ -4,25 +4,19 @@
 
 A [Polymer 2.0](https://www.polymer-project.org/2.0/) element to ease the use and configuration of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
 
-A live [Demo](https://hunsalz.github.io/web-socket) of \<web-socket\>.
+Watch a live [demo](https://hunsalz.github.io/web-socket) of the `<web-socket>` element.
 
-## Install dependencies and run the demo
-
-*Prerequisites:*
-
-* [npm](https://www.npmjs.com/)
-* [bower](https://bower.io/)
-* [Polymer CLI](https://www.npmjs.com/package/polymer-cli)
+## Install dependencies and run the demo locally
 
 *Install & run*
 
-1. Run bower install from the repo directory:
+1. Install all dependencies via [Bower](https://bower.io/) in the repo directory:
 
 ```
     bower install
 ```
 
-2. Run the Polymer development server from the project directory:
+2. Run the demo automatically in your browser via the Polymer development server part of [Polymer CLI](https://www.npmjs.com/package/polymer-cli) from the project directory:
 
 ```
     polymer serve --open
@@ -57,4 +51,4 @@ Attributes explained:
 
 ## Run your own prototype WebSocket-Server without great effort
 
-Almost all demo references uses *wss://echo.websocket.org/* as WebSocket-Server. If you search for a local alternative, you can get up and running in minutes with  [httpwebsockethandler](https://github.com/SevenW/httpwebsockethandler) by [SevenW](https://github.com/SevenW)
+Almost all demo references uses *wss://echo.websocket.org/* as WebSocket-Server. This [demo](https://hunsalz.github.io/web-socket) makes no different. If you search for a local alternative, you can get up and running in minutes with [httpwebsockethandler](https://github.com/SevenW/httpwebsockethandler) by [SevenW](https://github.com/SevenW).
