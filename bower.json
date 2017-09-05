@@ -1,6 +1,6 @@
 {
   "name": "web-socket",
-  "description": "Polymer component to facilitate web sockets.",
+  "description": "A Polymer element to ease the use and configuration of Websockets",
   "main": "web-socket.html",
   "dependencies": {
     "polymer": "Polymer/polymer#^2.0.0"
