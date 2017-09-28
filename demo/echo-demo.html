@@ -96,7 +96,7 @@
           },
           state: {
             type: Number,
-            observer: '_handleStateChanges',
+            observer: '_handleWSStateChanges',
             notify: true
           },
           response: {
@@ -140,7 +140,7 @@
         this.$.error.update({invalid: false});
       }
 
-      _handleStateChanges() {
+      _handleWSStateChanges() {
 
         var _color = 'var(--paper-orange-500)';
         switch (this.state) {
