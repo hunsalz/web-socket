@@ -2,7 +2,7 @@
 
 # \<web-socket\>
 
-A [Polymer 2.0](https://www.polymer-project.org/2.0/) element to ease the use and configuration of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
+A [Polymer 2.0](https://www.polymer-project.org/2.0/) element to ease the usage of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
 
 Watch a live [demo](https://hunsalz.github.io/web-socket) of the `<web-socket>` element.
 
