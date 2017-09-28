@@ -66,6 +66,7 @@ The `web-socket` element ease the usage of WebSockets.
            */
           state: {
             type: Number,
+            value: -1, // undefined = ws connect outstanding or ws connect returns error
             notify: true,
             readOnly: true
           },
@@ -237,7 +238,9 @@ The `web-socket` element ease the usage of WebSockets.
        * Called internally to notify about WebSocket.readyState changes.
        */
       _notifyStateChange() {
-        this._setState(this.ws.readyState);
+        if (this.ws != null) {
+          this._setState(this.ws.readyState);
+        }
       }
 
       /**
