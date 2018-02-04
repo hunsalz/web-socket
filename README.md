@@ -49,4 +49,4 @@ Attributes explained:
 
 ## Run your own prototype WebSocket-Server without great effort
 
-Almost all demo references uses *wss://echo.websocket.org/* as WebSocket-Server. This [demo](https://hunsalz.github.io/web-socket) makes no different. If you search for a local alternative, you can get up and running in minutes with [httpwebsockethandler](https://github.com/SevenW/httpwebsockethandler) by [SevenW](https://github.com/SevenW).
+Almost all demo references uses *wss://echo.websocket.org/* as WebSocket-Server. This [demo](https://hunsalz.github.io/web-socket) makes no difference. If you search for a local alternative, you can get up and running in minutes with [httpwebsockethandler](https://github.com/SevenW/httpwebsockethandler) by [SevenW](https://github.com/SevenW).
