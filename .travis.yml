@@ -1,0 +1,15 @@
+language: node_js
+dist: trusty
+sudo: required
+addons:
+  firefox: "latest"
+node_js:
+  - "node"
+  - "stable"
+cache:
+  directories:
+    - node_modules
+install:
+  - npm install -g polymer-cli
+script:
+  - polymer install -v
