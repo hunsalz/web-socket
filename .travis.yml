@@ -11,11 +11,12 @@ cache:
     - node_modules
 install:
   - npm install -g polymer-cli
-script:
-  - polymer install -v
+  - npm install
+  - polymer install
 deploy:
   provider: pages
   skip-cleanup: true
+  local-dir: bower_components
   github-token: $GH_PAGES_TOKEN
   keep-history: true
   verbose: true
