@@ -13,6 +13,7 @@ install:
   - npm install -g polymer-cli
   - npm install
   - polymer install
+  - polymer build
 deploy:
   provider: pages
   skip-cleanup: true
