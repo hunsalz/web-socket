@@ -17,5 +17,11 @@
   },
   "scripts": {
     "update-types": "bower install"
-  }
+  },
+  "builds": [
+    {
+      "preset": "es6-unbundled",
+      "addServiceWorker": false
+    }
+  ]
 }

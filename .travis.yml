@@ -16,7 +16,7 @@ install:
 deploy:
   provider: pages
   skip-cleanup: true
-  local-dir: bower_components
+  local-dir: build/es6-unbundled
   github-token: $GH_PAGES_TOKEN
   keep-history: true
   verbose: true
