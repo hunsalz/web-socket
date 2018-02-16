@@ -11,7 +11,7 @@ cache:
     - node_modules
 install:
   - npm install -g bower
-  - bower install jquery --config.directory=.
+  - bower install jquery --config.directory=..
 deploy:
   provider: pages
   github-token: $GH_PAGES_TOKEN
