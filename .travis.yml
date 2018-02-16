@@ -11,7 +11,9 @@ cache:
     - node_modules
 install:
   - npm install -g bower
-  - bower install jquery --config.directory=..
+  - bower install jquery --config.directory=components
+  - mkdir components/web-socket
+  - cp -R demo components/web-socket
 deploy:
   provider: pages
   github-token: $GH_PAGES_TOKEN
