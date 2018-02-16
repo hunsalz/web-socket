@@ -10,9 +10,8 @@ cache:
   directories:
     - node_modules
 install:
-  - npm install -g polymer-cli
-  - npm install
-  - polymer install
+  - npm install -g bower
+  - bower install jquery --config.directory=components
 deploy:
   provider: pages
   github-token: $GH_PAGES_TOKEN
