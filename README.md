@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/hunsalz/web-socket.svg?branch=master)](https://travis-ci.org/hunsalz/web-socket)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![License](https://img.shields.io/badge/license-MIT%20License-blue.svg)](http://doge.mit-license.org)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/hunsalz/web-socket)
 
 # \<web-socket\>
