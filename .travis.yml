@@ -12,6 +12,7 @@ cache:
 install:
   - npm install -g bower
 before_deploy:
+  - bower install jquery --config.directory=components
   - git clone https://github.com/hunsalz/web-socket components/web-socket
   - echo "<META http-equiv="refresh" content=\"0;URL=components/web-socket/\">" >index.html
 deploy:
