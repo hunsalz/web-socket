@@ -1,0 +1,20 @@
+{
+  "name": "hunsalz/web-socket",
+  "private": true,
+  "description": "A Polymer 2.0 element to ease the usage of WebSockets.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hunsalz/web-socket.git"
+  },
+  "devDependencies": {
+    "bower": "^1.8.2"
+  },
+  "lint": {
+    "rules": [
+      "polymer-2"
+    ]
+  },
+  "scripts": {
+    "update-types": "bower install"
+  }
+}
