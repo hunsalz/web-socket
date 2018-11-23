@@ -17,7 +17,7 @@ $ polymer build
 2. Run the demo automatically in your browser:
 
 ```
-    polymer serve --open
+polymer serve --open
 ```
 
 ## Usage
