@@ -1,8 +1,11 @@
 language: node_js
+node_js:
+  - "10"
 dist: trusty
 sudo: required
 addons:
-  firefox: "latest"
+  firefox: latest
+  chrome: stable
 node_js:
   - "node"
   - "stable"
@@ -11,13 +14,15 @@ cache:
     - node_modules
 install:
   - npm install -g polymer-cli
+script:
+  - polymer install -v
 before_deploy:
   - git clone https://github.com/hunsalz/web-socket components/web-socket
-  - polymer install
   - echo "<META http-equiv="refresh" content=\"0;URL=components/web-socket/\">" > index.html
 deploy:
   provider: pages
   github-token: $GH_PAGES_TOKEN
+  local-dir: .
   skip-cleanup: true
   keep-history: true
   verbose: true
