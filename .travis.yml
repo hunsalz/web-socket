@@ -14,10 +14,6 @@ cache:
     - node_modules
 script:
   - npm install
-  - ls -l
-before_deploy:
-  - git clone https://github.com/hunsalz/web-socket components/web-socket
-  - echo "<META http-equiv="refresh" content=\"0;URL=components/web-socket/\">" > index.html
 deploy:
   provider: pages
   skip-cleanup: true
