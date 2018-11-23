@@ -14,15 +14,16 @@ cache:
     - node_modules
 script:
   - npm install
+  - ls -l
 before_deploy:
   - git clone https://github.com/hunsalz/web-socket components/web-socket
   - echo "<META http-equiv="refresh" content=\"0;URL=components/web-socket/\">" > index.html
 deploy:
   provider: pages
-  github-token: $GH_PAGES_TOKEN
-  local-dir: .
   skip-cleanup: true
+  github-token: $GH_PAGES_TOKEN
   keep-history: true
+  local-dir: .
   verbose: true
   on:
     branch: master
