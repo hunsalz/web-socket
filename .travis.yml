@@ -12,8 +12,8 @@ cache:
 install:
   - npm install -g polymer-cli
 before_deploy:
-  - polymer install
   - git clone https://github.com/hunsalz/web-socket components/web-socket
+  - polymer install
   - echo "<META http-equiv="refresh" content=\"0;URL=components/web-socket/\">" > index.html
 deploy:
   provider: pages
