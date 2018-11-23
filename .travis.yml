@@ -14,12 +14,12 @@ cache:
     - node_modules
 script:
   - npm install
+  - rm .gitignore
 deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GH_PAGES_TOKEN
   keep-history: true
-  local-dir: .
   verbose: true
   on:
     branch: master
