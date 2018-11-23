@@ -30,7 +30,9 @@ Example of `<web-socket>`:
             state="{{state}}"
             last-request="{{request}}"
             last-response="{{response}}"
-            last-error="{{error}}">
+            last-error="{{error}}"
+            retry
+            connect-attempts="{{connectAttempts}}">
 </web-socket>
 ```
 
