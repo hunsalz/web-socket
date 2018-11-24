@@ -19,7 +19,7 @@ before_deploy:
   - echo "<META http-equiv="refresh" content=\"0;URL=components/web-socket/\">" > index.html
   - cd components/web-socket
   - npm install
-  - ls -l
+  - rm .gitignore
 deploy:
   provider: pages
   skip-cleanup: true
