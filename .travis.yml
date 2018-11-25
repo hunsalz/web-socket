@@ -9,15 +9,13 @@ addons:
 node_js:
   - "node"
   - "stable"
-cache:
-  directories:
-    - node_modules
 script:
   - npm install
 before_deploy:
   - mv node_modules components
   - git clone https://github.com/hunsalz/web-socket components/web-socket
   - echo "<META http-equiv="refresh" content=\"0;URL=components/web-socket/\">" > index.html
+  - ls -l
 deploy:
   provider: pages
   skip-cleanup: true
