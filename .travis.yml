@@ -12,9 +12,9 @@ node_js:
 script:
   - npm install
 before_deploy:
-  - mv node_modules components
-  - git clone https://github.com/hunsalz/web-socket components/web-socket
-  - echo "<META http-equiv="refresh" content=\"0;URL=components/web-socket/\">" > index.html
+  - git clone https://github.com/hunsalz/web-socket node_modules/web-socket
+  - echo "<META http-equiv="refresh" content=\"0;URL=node_modules/web-socket/\">" > index.html
+  - rm .gitignore
   - ls -l
 deploy:
   provider: pages
