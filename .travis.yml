@@ -16,10 +16,6 @@ script:
   - npm install
 before_deploy:
   - mv node_modules/* .
-  - echo "TEST 1" > test1.tmp
-  - mkdir tmp
-  - echo "TEST 2" > tmp/test1.tmp
-  - ls -l
 deploy:
   provider: pages
   skip-cleanup: true
