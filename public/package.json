@@ -1,7 +1,12 @@
 {
-  "name": "web-socket",
+  "name": "@hunsalz/web-socket",
   "description": "An element to ease usage of WebSockets.",
   "main": "web-socket.js",
+  "version": "1.1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hunsalz/web-socket"
+  },
   "dependencies": {
     "@polymer/polymer": "^3.1.0",
     "polymer-cli": "^1.9.1"
