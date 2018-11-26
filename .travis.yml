@@ -1,0 +1,25 @@
+language: node_js
+node_js:
+  - "10"
+dist: trusty
+sudo: required
+addons:
+  firefox: latest
+  chrome: stable
+node_js:
+  - "node"
+  - "stable"
+cache:
+  directories:
+    - node_modules
+script:
+  - npm install
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_PAGES_TOKEN
+  keep-history: true
+  local-dir: .
+  verbose: true
+  on:
+    branch: master

@@ -1,0 +1,14 @@
+{
+  "entrypoint": "index.html",
+  "sources": [
+    "src/**.js",
+    "package.json"
+  ],
+  "moduleResolution": "node",
+  "npm": true,
+  "lint": {
+    "rules": [
+      "polymer-3"
+    ]
+  }
+}
