@@ -14,6 +14,8 @@ cache:
     - node_modules
 script:
   - npm install
+before_deploy:
+  - rm .gitignore
 deploy:
   provider: pages
   skip-cleanup: true
