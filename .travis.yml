@@ -17,8 +17,6 @@ script:
   - polymer install
   - polymer build
   - echo "<META http-equiv="refresh" content=\"0;URL=build/public/demo/\">" >index.html
-before_deploy:
-  - rm .gitignore
 deploy:
   provider: pages
   skip-cleanup: true
