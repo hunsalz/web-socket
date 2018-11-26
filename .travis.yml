@@ -16,7 +16,8 @@ script:
   - npm install polymer-cli
   - polymer install
   - polymer build
-  - echo "<META http-equiv="refresh" content=\"0;URL=build/public/demo/\">" >index.html
+  - mv build/public .
+  - echo "<META http-equiv="refresh" content=\"0;URL=public/demo/\">" >index.html
 deploy:
   provider: pages
   skip-cleanup: true
