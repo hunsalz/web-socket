@@ -16,7 +16,7 @@ script:
   - npm install polymer-cli
   - polymer install
   - polymer build
-  - echo "<META http-equiv="refresh" content=\"0;URL=demo/\">" >index.html
+  - echo "<META http-equiv="refresh" content=\"0;URL=build/public/demo/\">" >index.html
 before_deploy:
   - rm .gitignore
 deploy:
