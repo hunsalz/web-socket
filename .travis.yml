@@ -17,8 +17,8 @@ script:
 before_deploy:
   - mv node_modules/* .
   - echo "TEST 1" > test1.tmp
-  - mkdir test
-  - echo "TEST 2" > test/test1.tmp
+  - mkdir tmp
+  - echo "TEST 2" > tmp/test1.tmp
   - ls -l
 deploy:
   provider: pages
