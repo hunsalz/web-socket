@@ -15,7 +15,7 @@ cache:
 install:
   - npm install -g polymer-cli
 script:
-  - polymer install
+  - npm install
   - polymer build
   - mv build/public .
   - echo "<META http-equiv="refresh" content=\"0;URL=public/demo/\">" >index.html
