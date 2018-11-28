@@ -2,7 +2,7 @@
 [![License](https://img.shields.io/badge/license-MIT%20License-blue.svg)](http://doge.mit-license.org)
 [![Published on webcomponents.org](https://img.shields.io/badge/webcomponents.org-published-blue.svg)](https://www.webcomponents.org/element/hunsalz/web-socket)
 
-# Watch  [\<web-socket\>↗](https://hunsalz.github.io/web-socket) live
+# Watch  [\<web-socket\>↗](https://hunsalz.github.io/web-socket/demo) live
 
 A [Polymer 3.0](https://polymer-library.polymer-project.org/3.0/docs/devguide/feature-overview) element to ease the usage of [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSocket).
 
