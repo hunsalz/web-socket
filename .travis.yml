@@ -9,6 +9,9 @@ addons:
 node_js:
   - "node"
   - "stable"
+stages:
+  - deploy
+  - ':deploy it to GH-PAGES'
 cache:
   directories:
     - node_modules
@@ -17,14 +20,12 @@ install:
 script:
   - npm install
   - polymer build
-  - mv build/public .
-  - echo "<META http-equiv="refresh" content=\"0;URL=public/demo/\">" >index.html
 deploy:
   provider: pages
   skip-cleanup: true
   github-token: $GH_PAGES_TOKEN
   keep-history: true
-  local-dir: .
+  local-dir: build/public
   verbose: true
   on:
     branch: master
