@@ -4,8 +4,8 @@
   "main": "web-socket.js",
   "version": "1.1.1",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/hunsalz/web-socket"
+    "type": "git",
+    "url": "https://github.com/hunsalz/web-socket"
   },
   "dependencies": {
     "@polymer/polymer": "^3.1.0"
@@ -17,6 +17,7 @@
     "@polymer/paper-button": "^3.0.0",
     "@polymer/paper-icon-button": "^3.0.0",
     "@polymer/paper-input": "^3.0.0",
+    "@polymer/paper-toast": "^3.0.1",
     "@polymer/test-fixture": "^4.0.0",
     "@webcomponents/webcomponentsjs": "^2.2.0",
     "chai": "^4.0.0",

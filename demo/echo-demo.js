@@ -10,84 +10,92 @@ import '@polymer/paper-input/paper-input.js';
 import '@polymer/paper-input/paper-input-container.js';
 import '@polymer/paper-input/paper-input-error.js';
 import '@polymer/paper-styles/paper-styles.js';
+import '@polymer/paper-toast/paper-toast.js';
 
 import '../web-socket.js';
 
 class EchoDemo extends PolymerElement {
   static get template() {
     return html`
-    <style>
-      :host() {
-        display: inline-block;
-      }
+      <style>
+        :host() {
+          display: inline-block;
+        }
 
-      .container {
-        display: inline-flex;
-        align-items: center;
-        width: 100%;
-      }
+        .container {
+          display: inline-flex;
+          align-items: center;
+          width: 100%;
+        }
 
-      input {
-        outline: none;
-        box-shadow: none;
-        padding: 0;
-        width: 100%;
-        max-width: 100%;
-        background: transparent;
-        border: none;
-        color: var(--paper-input-container-input-color, var(--primary-text-color));
-        -webkit-appearance: none;
-        text-align: inherit;
-        vertical-align: bottom;
-        /* Firefox sets a min-width on the input, which can cause layout issues */
-        min-width: 0;
-        @apply --paper-font-subhead;
-        @apply --paper-input-container-input;
-      }
+        input {
+          outline: none;
+          box-shadow: none;
+          padding: 0;
+          width: 100%;
+          max-width: 100%;
+          background: transparent;
+          border: none;
+          color: var(--paper-input-container-input-color, var(--primary-text-color));
+          -webkit-appearance: none;
+          text-align: inherit;
+          vertical-align: bottom;
+          /* Firefox sets a min-width on the input, which can cause layout issues */
+          min-width: 0;
+          @apply --paper-font-subhead;
+          @apply --paper-input-container-input;
+        }
 
-      paper-input-container {
-        width: 100%;
-      }
+        paper-input-container {
+          width: 100%;
+        }
 
-      paper-input {
-        width: 100%;
-      }
+        paper-input {
+          width: 100%;
+        }
 
-      paper-icon-button {
-        background-color: var(--paper-pink-700);
-        color: white;
-        border-radius: 6px;
-      }
+        paper-icon-button {
+          background-color: var(--paper-pink-700);
+          color: white;
+          border-radius: 6px;
+        }
 
-      paper-icon-button:hover {
-        background-color: var(--paper-pink-500);
-        color: white;
-        border-radius: 6px;
-      }
-    </style>
-    
-    <!-- service components -->
+        paper-icon-button:hover {
+          background-color: var(--paper-pink-500);
+          color: white;
+          border-radius: 6px;
+        }
 
-    <web-socket id="ws" auto url="[[url]]" state="{{state}}" last-response="{{response}}" last-error="{{error}}">
-    </web-socket>
+        paper-toast {
+          width: 100%;
+          text-align: center;
+        }
+      </style>
+      
+      <!-- service components -->
 
-    <!-- UI components -->
+      <web-socket id="ws" auto url="[[url]]" state="{{state}}" last-response="{{response}}" last-error="{{error}}">
+      </web-socket>
 
-    <div class="container">
-      <paper-input-container always-float-label auto-validate attr-for-value="url">
-        <label slot="label">URL</label>
-        <iron-input slot="input" bind-value="{{url}}">
-          <input value="{{url::input}}">
-        </iron-input>
-        <paper-input-error id="error" slot="add-on">Failed to establish connection.</paper-input-error>
-      </paper-input-container>
-      <paper-icon-button icon="{{__toggleIcon(state)}}" on-click="__toggleWSState"></paper-icon-button>
-    </div>
-    <template is="dom-repeat" items="[[messages]]">
-      <pre>[[item.author]]: [[item.text]]</pre>
-    </template>
-    <paper-input id="input" autofocus value="{{message}}"></paper-input>
-    <paper-button raised on-click="__send">Send</paper-button>
+      <!-- UI components -->
+
+      <div class="container">
+        <paper-input-container always-float-label auto-validate attr-for-value="url">
+          <label slot="label">URL</label>
+          <iron-input slot="input" bind-value="{{url}}">
+            <input value="{{url::input}}">
+          </iron-input>
+          <paper-input-error id="error" slot="add-on">Failed to establish connection.</paper-input-error>
+        </paper-input-container>
+        <paper-icon-button icon="{{__toggleIcon(state)}}" on-click="__toggleWSState"></paper-icon-button>
+      </div>
+      <template is="dom-repeat" items="[[messages]]">
+        <pre>[[item.author]]: [[item.text]]</pre>
+      </template>
+      <paper-input id="input" autofocus value="{{message}}"></paper-input>
+      <paper-button raised on-click="__send">Send</paper-button>
+
+      <paper-toast id="toast" vertical-align="top" text="[[__showWSMessage(state)]]" duration="3000"></paper-toast>
     `;
   }
 
@@ -96,7 +104,6 @@ class EchoDemo extends PolymerElement {
       url: {
         type: String,
         value: 'wss://echo.websocket.org/',
-        observer: '__handleUrlChanges',
         notify: true
       },
       messages: {
@@ -106,6 +113,7 @@ class EchoDemo extends PolymerElement {
       },
       state: {
         type: Number,
+        observer: '__handleWSStateChanges',
         notify: true
       },
       response: {
@@ -191,6 +199,31 @@ class EchoDemo extends PolymerElement {
     }
     // overwrite any error message before
     this.$.error.update({ invalid: false });
+  }
+
+  /**
+   * Show a human readable WS state message
+   * @param {*} state 
+   */
+  __showWSMessage(state) {
+
+    this.$.toast.open();
+    switch (this.state) {
+      case -1:
+        return "No response from " + this.url;
+      case 0:
+        return "Connecting with " + this.url;
+      case 1:
+        return "Connected with " + this.url;
+      case 2:
+        return "Closing connection with " + this.url;
+      case 3:
+        return "Connection with " + this.url + " closed";
+      default:
+        // shouldn't be called ever
+        this.$.toast.close();
+        return "";
+    }
   }
 }
 
