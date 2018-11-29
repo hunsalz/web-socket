@@ -11,7 +11,7 @@ node_js:
   - "stable"
 stages:
   - deploy
-  - ':deploy it to GH-PAGES'
+  - ':ship it to GitHub Pages'
 cache:
   directories:
     - node_modules
