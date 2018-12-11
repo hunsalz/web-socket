@@ -95,7 +95,7 @@ class EchoDemo extends PolymerElement {
       <paper-input id="input" autofocus value="{{message}}"></paper-input>
       <paper-button raised on-click="__send">Send</paper-button>
 
-      <paper-toast id="toast" vertical-align="top" text="[[__showWSMessage(state)]]" duration="3000"></paper-toast>
+      <paper-toast id="toast" text="[[__showWSMessage(state)]]" duration="3000"></paper-toast>
     `;
   }
 
