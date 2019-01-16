@@ -113,7 +113,7 @@ class EchoDemo extends PolymerElement {
       },
       state: {
         type: Number,
-        observer: '__handleWSStateChanges',
+        observer: '__toggleIcon',
         notify: true
       },
       response: {
